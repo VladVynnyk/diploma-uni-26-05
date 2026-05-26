@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_PHOTO = "https://via.placeholder.com/150"
 DEFAULT_PASSWORD = "password123"
-ROOT_DIR = Path(__file__).resolve().parents[2]
-AVATAR_URLS_PATH = ROOT_DIR / "deployment" / "generated" / "avatar_urls.json"
-AVATAR_MANIFEST_PATH = ROOT_DIR / "deployment" / "avatar_manifest.json"
+BACKEND_ROOT = Path(__file__).resolve().parents[1]
+AVATAR_URLS_PATH = BACKEND_ROOT / "deployment" / "generated" / "avatar_urls.json"
+AVATAR_MANIFEST_PATH = BACKEND_ROOT / "deployment" / "avatar_manifest.json"
 
 TAG_DEFINITIONS = [
     {"name": "Бізнес", "description": "Консультації щодо запуску, розвитку та масштабування бізнесу."},

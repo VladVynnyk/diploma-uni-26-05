@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-COPY req.txt .
+COPY consulting-backend/req.txt .
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \
@@ -19,7 +19,9 @@ RUN apt-get update \
 RUN pip install -r req.txt
 
 # copy project
-COPY . /backend
+COPY consulting-backend /backend
+RUN mkdir -p /backend/deployment/generated
+COPY deployment/avatar_manifest.json /backend/deployment/avatar_manifest.json
 RUN chmod +x /backend/docker-entrypoint.sh
 EXPOSE 8000
 

@@ -49,8 +49,8 @@ services:
 
   backend:
     build:
-      context: ./consulting-backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: consulting-backend/Dockerfile
     restart: unless-stopped
     env_file:
       - ./.env
