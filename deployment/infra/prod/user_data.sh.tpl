@@ -5,60 +5,106 @@ exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&
 
 export DEBIAN_FRONTEND=noninteractive
 
+echo "=== Starting EC2 bootstrap ==="
+
 apt-get update -y
-apt-get install -y ca-certificates curl git gnupg lsb-release apt-transport-https software-properties-common
+apt-get install -y \
+  ca-certificates \
+  curl \
+  git \
+  gnupg \
+  lsb-release \
+  apt-transport-https \
+  software-properties-common
+
+echo "=== Removing old Docker packages if present ==="
 
 systemctl stop docker || true
 snap remove docker || true
 apt-get remove -y docker docker-engine docker.io containerd runc podman-docker || true
 apt-get autoremove -y || true
 
+echo "=== Adding Docker APT repository ==="
+
 install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+rm -f /etc/apt/keyrings/docker.gpg
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+  gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
+
 chmod a+r /etc/apt/keyrings/docker.gpg
 
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo $VERSION_CODENAME) stable" | \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt-get update -y
-DOCKER_CE_VERSION="$(apt-cache madison docker-ce | awk '/5:28\.5\./ { print $3; found=1; exit } END { if (!found) exit 0 }')"
-DOCKER_CLI_VERSION="$(apt-cache madison docker-ce-cli | awk '/5:28\.5\./ { print $3; found=1; exit } END { if (!found) exit 0 }')"
 
-echo "Resolved Docker CE version: $${DOCKER_CE_VERSION:-<none>}"
-echo "Resolved Docker CLI version: $${DOCKER_CLI_VERSION:-<none>}"
+echo "=== Installing pinned Docker version ==="
 
-if [ -z "$${DOCKER_CE_VERSION}" ] || [ -z "$${DOCKER_CLI_VERSION}" ]; then
-  echo "Could not find Docker 28.5.x packages in the Docker APT repository."
+DOCKER_VERSION="5:28.5.2-1~ubuntu.24.04~noble"
+
+echo "Requested Docker version: $${DOCKER_VERSION}"
+
+echo "Available docker-ce versions:"
+apt-cache madison docker-ce || true
+
+echo "Available docker-ce-cli versions:"
+apt-cache madison docker-ce-cli || true
+
+if ! apt-cache madison docker-ce | awk '{print $3}' | grep -Fxq "$${DOCKER_VERSION}"; then
+  echo "ERROR: docker-ce version not found: $${DOCKER_VERSION}"
+  exit 1
+fi
+
+if ! apt-cache madison docker-ce-cli | awk '{print $3}' | grep -Fxq "$${DOCKER_VERSION}"; then
+  echo "ERROR: docker-ce-cli version not found: $${DOCKER_VERSION}"
   exit 1
 fi
 
 apt-get install -y \
-  docker-ce="$${DOCKER_CE_VERSION}" \
-  docker-ce-cli="$${DOCKER_CLI_VERSION}" \
+  docker-ce="$${DOCKER_VERSION}" \
+  docker-ce-cli="$${DOCKER_VERSION}" \
   containerd.io \
   docker-buildx-plugin \
   docker-compose-plugin
-apt-mark hold docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+apt-mark hold \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  docker-buildx-plugin \
+  docker-compose-plugin
+
 systemctl enable docker
 systemctl start docker
-usermod -aG docker ubuntu
 
+usermod -aG docker ubuntu || true
+
+echo "=== Docker versions ==="
 docker version
 docker compose version
 
-mkdir -p /opt
+echo "=== Preparing project directory ==="
+
 mkdir -p /opt/consulting
 chown -R ubuntu:ubuntu /opt/consulting
+
 if [ -d /opt/consulting/.git ]; then
+  echo "=== Existing repo found. Pulling latest code ==="
   sudo -u ubuntu git -C /opt/consulting fetch --all
   sudo -u ubuntu git -C /opt/consulting checkout ${repo_branch}
   sudo -u ubuntu git -C /opt/consulting pull origin ${repo_branch}
 else
+  echo "=== Cloning repo ==="
+  rm -rf /opt/consulting/*
   sudo -u ubuntu git clone --branch ${repo_branch} ${repo_url} /opt/consulting
 fi
+
 chown -R ubuntu:ubuntu /opt/consulting
+
+echo "=== Writing .env ==="
 
 cat >/opt/consulting/.env <<EOF
 DOMAIN=${app_domain}
@@ -67,6 +113,7 @@ LETSENCRYPT_EMAIL=${letsencrypt_email}
 POSTGRES_USER=${postgres_user}
 POSTGRES_PASSWORD=${postgres_password}
 POSTGRES_DB=${postgres_db}
+
 DB_URI=postgresql+psycopg2://${postgres_user}:${postgres_password}@db:5432/${postgres_db}
 DATABASE_URL=postgresql://${postgres_user}:${postgres_password}@db:5432/${postgres_db}
 
@@ -87,7 +134,17 @@ USE_S3_AVATARS=${use_s3_avatars}
 SEED_DEMO_DATA=${seed_demo_data}
 EOF
 
+chown ubuntu:ubuntu /opt/consulting/.env
+chmod 600 /opt/consulting/.env
+
+echo "=== Starting Docker Compose production stack ==="
+
 cd /opt/consulting
+
 docker compose -f docker-compose.prod.yml down --remove-orphans || true
 docker compose -f docker-compose.prod.yml up -d --build
+
+echo "=== Docker Compose status ==="
 docker compose -f docker-compose.prod.yml ps
+
+echo "=== Bootstrap completed ==="
