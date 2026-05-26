@@ -41,7 +41,7 @@ variable "repo_url" {
 variable "repo_branch" {
   type        = string
   description = "Git branch checked out on EC2."
-  default     = "main"
+  default     = "master"
 }
 
 variable "enable_route53" {

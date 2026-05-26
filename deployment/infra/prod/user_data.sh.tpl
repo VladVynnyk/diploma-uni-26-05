@@ -1,10 +1,17 @@
 #!/bin/bash
 set -euxo pipefail
 
+exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update -y
-apt-get install -y ca-certificates curl git gnupg lsb-release
+apt-get install -y ca-certificates curl git gnupg lsb-release apt-transport-https software-properties-common
+
+systemctl stop docker || true
+snap remove docker || true
+apt-get remove -y docker docker-engine docker.io containerd runc podman-docker || true
+apt-get autoremove -y || true
 
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -19,6 +26,10 @@ apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable docker
 systemctl start docker
+usermod -aG docker ubuntu
+
+docker version
+docker compose version
 
 mkdir -p /opt
 if [ -d /opt/consulting/.git ]; then
@@ -57,4 +68,6 @@ SEED_DEMO_DATA=${seed_demo_data}
 EOF
 
 cd /opt/consulting
+docker compose -f docker-compose.prod.yml down --remove-orphans || true
 docker compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml ps
