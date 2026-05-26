@@ -49,6 +49,8 @@ docker version
 docker compose version
 
 mkdir -p /opt
+mkdir -p /opt/consulting
+chown -R ubuntu:ubuntu /opt/consulting
 if [ -d /opt/consulting/.git ]; then
   sudo -u ubuntu git -C /opt/consulting fetch --all
   sudo -u ubuntu git -C /opt/consulting checkout ${repo_branch}
