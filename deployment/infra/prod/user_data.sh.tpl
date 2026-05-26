@@ -19,21 +19,24 @@ chmod a+r /etc/apt/keyrings/docker.gpg
 
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | \
+  $(. /etc/os-release && echo $VERSION_CODENAME) stable" | \
   tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt-get update -y
-DOCKER_CE_VERSION="$(apt-cache madison docker-ce | awk '/5:28\.5\./ { print $3; exit }')"
-DOCKER_CLI_VERSION="$(apt-cache madison docker-ce-cli | awk '/5:28\.5\./ { print $3; exit }')"
+DOCKER_CE_VERSION="$(apt-cache madison docker-ce | awk '/5:28\.5\./ { print $3; found=1; exit } END { if (!found) exit 0 }')"
+DOCKER_CLI_VERSION="$(apt-cache madison docker-ce-cli | awk '/5:28\.5\./ { print $3; found=1; exit } END { if (!found) exit 0 }')"
 
-if [ -z "${DOCKER_CE_VERSION}" ] || [ -z "${DOCKER_CLI_VERSION}" ]; then
+echo "Resolved Docker CE version: $${DOCKER_CE_VERSION:-<none>}"
+echo "Resolved Docker CLI version: $${DOCKER_CLI_VERSION:-<none>}"
+
+if [ -z "$${DOCKER_CE_VERSION}" ] || [ -z "$${DOCKER_CLI_VERSION}" ]; then
   echo "Could not find Docker 28.5.x packages in the Docker APT repository."
   exit 1
 fi
 
 apt-get install -y \
-  docker-ce="${DOCKER_CE_VERSION}" \
-  docker-ce-cli="${DOCKER_CLI_VERSION}" \
+  docker-ce="$${DOCKER_CE_VERSION}" \
+  docker-ce-cli="$${DOCKER_CLI_VERSION}" \
   containerd.io \
   docker-buildx-plugin \
   docker-compose-plugin
