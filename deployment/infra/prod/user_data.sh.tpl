@@ -23,7 +23,21 @@ echo \
   tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt-get update -y
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+DOCKER_CE_VERSION="$(apt-cache madison docker-ce | awk '/5:28\.5\./ { print $3; exit }')"
+DOCKER_CLI_VERSION="$(apt-cache madison docker-ce-cli | awk '/5:28\.5\./ { print $3; exit }')"
+
+if [ -z "${DOCKER_CE_VERSION}" ] || [ -z "${DOCKER_CLI_VERSION}" ]; then
+  echo "Could not find Docker 28.5.x packages in the Docker APT repository."
+  exit 1
+fi
+
+apt-get install -y \
+  docker-ce="${DOCKER_CE_VERSION}" \
+  docker-ce-cli="${DOCKER_CLI_VERSION}" \
+  containerd.io \
+  docker-buildx-plugin \
+  docker-compose-plugin
+apt-mark hold docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable docker
 systemctl start docker
 usermod -aG docker ubuntu
@@ -33,12 +47,13 @@ docker compose version
 
 mkdir -p /opt
 if [ -d /opt/consulting/.git ]; then
-  git -C /opt/consulting fetch --all
-  git -C /opt/consulting checkout ${repo_branch}
-  git -C /opt/consulting pull origin ${repo_branch}
+  sudo -u ubuntu git -C /opt/consulting fetch --all
+  sudo -u ubuntu git -C /opt/consulting checkout ${repo_branch}
+  sudo -u ubuntu git -C /opt/consulting pull origin ${repo_branch}
 else
-  git clone --branch ${repo_branch} ${repo_url} /opt/consulting
+  sudo -u ubuntu git clone --branch ${repo_branch} ${repo_url} /opt/consulting
 fi
+chown -R ubuntu:ubuntu /opt/consulting
 
 cat >/opt/consulting/.env <<EOF
 DOMAIN=${app_domain}
