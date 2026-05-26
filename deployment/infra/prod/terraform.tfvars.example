@@ -1,0 +1,23 @@
+aws_region            = "eu-central-1"
+instance_type         = "t3.small"
+key_name              = "my-ec2-keypair"
+ssh_allowed_cidr      = "203.0.113.10/32"
+repo_url              = "https://github.com/your-account/your-repo.git"
+repo_branch           = "main"
+enable_route53        = false
+root_domain           = "advicerr.com"
+app_domain            = "advicerr.com"
+letsencrypt_email     = "vladik.vunnuk@gmail.com"
+avatars_bucket_name   = "consulting-management-avatars3543"
+postgres_user         = "postgres"
+postgres_password     = "replace-with-strong-password"
+postgres_db           = "consultingdb"
+api_key               = ""
+jwt_secret_key        = "dbxvlgmMf67RZww45peIp7fZpZjzTqtX6AhrMpNLb4JMzdqgOE5S4VRxGAURnUK"
+jwt_refresh_secret_key = "spkrXAH34sPs6fBjva6ym2cTHkDCz4xb5GnCnrIPgjrGiRQzn6dPYXPJ0h6ibdq"
+seed_demo_data        = true
+use_s3_avatars        = true
+
+tags = {
+  Owner = "diploma"
+}

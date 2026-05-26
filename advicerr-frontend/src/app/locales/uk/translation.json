@@ -1,0 +1,254 @@
+{
+    "Global": {
+      "dateTimeFormats": {
+        "ISO": "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        "default": "dd MMMM yyyy HH:mm:ss",
+        "d-m-y": "dd MMMM yyyy",
+        "d-m": "dd-MM"
+      }
+    },
+    "Pages": {
+      "NotFoundPage": {
+        "headerTitle": "404",
+        "uhOhMessage": "Ой-йой!",
+        "message": "Ми не можемо знайти сторінку.",
+        "goBackButton": "Повернутись на головну"
+      },
+      "HomePage": {
+        "loadingLabel": "Завантаження...",
+        "errorLoadingUsersLabel": "Не вийшло завантажити дані.",
+        "headerTitle": "Головна сторінка",
+        "filterButtonLabel": "Фільтр",
+        "errorUsersNotFoundLabel": "Користувачів не знайдено"
+      },
+      "DashboardPage": {
+        "closeMobileMenuLabel": "Закрити",
+        "menuLabel": "Меню",
+        "loadingLabel": "Завантаження...",
+        "personalInfo": {
+          "personalInformationLabel": "Особиста інформація",
+          "changePhotoButtonLabel": "Змінити фото",
+          "nameLabel": "Ім'я",
+          "surnameLabel": "Прізвище",
+          "showOnWebsiteLabel": "Показувати мене на сайті",
+          "descriptionLabel": "Опис",
+          "priceLabel": "Ціна",
+          "emailLabel": "Ел-пошта",
+          "phone": "Номер телефону",
+          "saveButtonLabel": "Зберегти зміни",
+
+          "errorToastLabel": "Помилка",
+          "emailInvalidInputError": "Email неправильний.",      
+          "phoneInvalidInputError": "Неправильний формат номеру телефону.",
+          "failedToUpdateInfoLabel": "Не вдалося оновити інформацію. Будь ласка, спробуйте пізніше.",
+          "sessionEndedError": "Робоча сесія завершена. Зайдіть в кабінет знову. Перенаправлення...",
+
+          "successToastLabel": "Успіх",
+          "personalInfoUpdatedSuccessfullyLabel": "Вашу інформацію оновлено успішно!"
+          
+        },
+        "chats": {
+          "chatsLabel": "Чати"
+        },
+        "reviews": {
+          "reviewsLabel": "Відгуки"
+        },
+        "orders": {
+          "ordersLabel": "Замовлення"
+        }
+      },
+      "ResetPasswordPage": {
+       "errorLabel": "Помилка",
+       "passwordRequiredLabel":"Потрібен пароль",
+       "passwordLengthLabel": "Пароль має мати не менше, ніж 8 символів, 1 цифру та 1 букву!",
+       "codeSentLabel": "Код для верифікації надіслано",
+       "codeSentDescription": "Код надіслано на",
+       "failedToSendCodeLabel": "Не вийшло надіслати код. Спробуйте пізніше.",
+       "codeVerifiedLabel": "Код верифіковано",
+       "codeVerifiedDescription": "Тепер ви можете ввести новий пароль",
+       "invalidCodeLabel": "Код неправильний",
+       "invalidCodeDescription": "Код для верифікації неправильний. Спробуйте пізніше.",
+       "passwordsNotMatchingLabel": "Паролі не співпадають!",
+       "passwordUpdatedLabel": "Пароль оновлено!",
+       "passwordUpdatedDescription": "Пароль було успішно відновлено.",
+       "failedToUpdatePasswordLabel": "Не вийшло оновити пароль. Спробуйте пізніше.",
+
+       "forgotPasswordStepLabel": "Забули пароль?",
+       "enterCodeStepLabel": "Введіть код для верифікації",
+       "setNewPasswordLabel": "Введіть новий пароль",
+
+       "emailLabel": "Ел-пошта",
+       "emailPlaceholder": "Введіть вашу ел-пошту",
+       "sendVerifCodeButtonLabel": "Надіслати код",
+       "enterCodeInputLabel": "Введіть код, надісланий на вашу ел-пошту:",
+       "verifyButtonLabel": "Надіслати код",
+       "newPasswordInputLabel": "Новий пароль",
+       "newPasswordPlaceholder": "Введіть новий пароль",
+       "confirmPasswordInputLabel": "Підтвердіть пароль",
+       "confirmPasswordPlaceholder": "Підтвердіть новий пароль",
+       "changePasswordButtonLabel": "Змінити пароль"
+      }
+    },
+    "Components": {
+      "ConsultantCard":{
+        "scoreLabel": "Рейтинг",
+        "priceLabel": "Ціна",
+        "hourLabel": "год",
+        "reviewsLabel": "Відгуки",
+        "detailsLabel": "Детальніше",
+        "collapseLabel": "Згорнути",
+        "chatLabel": "Чат",
+        "buyLabel": "Купити",
+        "orderConsultationLabel": "Замовити консультацію у",
+        "reviewsAreEmptyLabel": "Відгуків поки немає."
+      },
+      "PayButton":{
+        "payLabel": "Оплатити"
+      },
+      "Review":{
+        "scoreLabel": "Рейтинг"
+      },
+      "Chats": {
+        "writeMessageLabel": "Писати повідомлення...",
+        "sendButtonLabel": "Надіслати"
+      },
+      "Header": {
+        "homeSpan": "Головна",
+        "categoriesLabel": "Категорії",
+        "q&aLabel": "Q&A",
+        "supportLabel": "Підтримка",
+        "loginLabel": "Увійти",
+        "registerLabel": "Реєстрація",
+        "logoutLabel": "Вийти"
+      },
+      "SingleOrder": {
+        "incomingOrderLabel": "Вхідне",
+        "outcomingOrderLabel": "Вихідне",
+        "chatButtonLabel": "Чат",
+        "reviewButtonLabel": "Додати відгук",
+        "youOrderedLabel": "Ви замовили консультацію у: ",
+        "someoneOrderedLabel": "Замовив консультацію",
+        "priceLabel": "Ціна"
+      
+      },
+      "SignupForm": {
+        "signUpLabel": "Реєстрація",
+        "nameLabel": "Ім'я",
+        "surnameLabel": "Прізвище",
+        "emailLabel": "Ел-пошта",
+        "passwordLabel": "Пароль",
+        "signUpButtonLabel": "Зареєстуватися",
+        "alternativeOptionLabel": "Вже маєте акаунт?",
+        "loginLabel": "Увійти",
+
+        "nameInputPlaceholder": "Введіть ім'я",
+        "surnameInputPlaceholder": "Введіть прізвище",
+        "emailInputPlaceholder": "Введіть ел-пошту",
+        "passwordInputPlaceholder": "Введіть пароль",
+
+        "emailRequiredLabel": "Е-мейл потрібен!",
+        "emailInvalidLabel": "Е-мейл неправильний",
+
+        "passwordRequiredLabel": "Потрібен пароль",
+        "passwordLengthLabel": "Пароль має мати не менше, ніж 8 символів"
+      },
+      "LoginForm": {
+        "logInLabel": "Увійти",
+        "emailLabel": "Ел-пошта",
+        "passwordLabel": "Пароль",
+        "logInButtonLabel": "Увійти",
+        "alternativeOptionLabel": "Не маєте акаунту?",
+        "registerLabel": "Зареєструватися",
+
+        "emailInputPlaceholder": "Введіть ел-пошту",
+        "passwordInputPlaceholder": "Введіть пароль",
+
+        "loginErrorLabel": "Ой-йой. Неправильний логін, або пароль!",
+
+        "emailRequiredLabel": "Е-мейл потрібен!",
+        "emailInvalidLabel": "Е-мейл неправильний",
+
+        "passwordRequiredLabel": "Потрібен пароль",
+        "passwordLengthLabel": "Пароль має мати не менше, ніж 8 цифр",
+
+        "forgotPasswordLabel": "Забули пароль?",
+        "recoverPasswordLabel": "Відновити"
+      },
+      "OrderForm": {
+        "headingLabel": "Заявка",
+        "nameLabel": "Ім'я",
+        "nameInputPlaceholder": "Введіть ім'я",
+        "surnameLabel": "Прізвище",
+        "surnameInputPlaceholder":"Введіть прізвище",
+        "emailLabel": "Ел-пошта",
+        "emailInputPlaceholder": "Введіть ел-пошту",
+        "phoneLabel": "Номер телефону",
+        "phoneInputPlaceholder": "Введіть номер телефону",
+
+        "unLoggedSubmitButtonLabel": "Підтвердити",
+        "loggedInSubmitButtonLabel": "Підтвердити",
+
+        "errorToastLabel": "Помилка",
+        "priceRequiredToastLabel": "Ціну необхідно заповнити",
+        "allFieldsAreRequiredToastLabel": "Всі поля необхідно заповнити.",
+        "failedToSubmitLabel": "Не вдалося підтвердити замовлення. Будь ласка, спробуйте пізніше.",
+
+        "successToastLabel": "Успіх",
+        "orderSubmittedSuccessfullyLabel": "Ваше замовлення підтверджено успішно!",
+        
+        "emailIsRequiredInputError": "Потрібен email.",
+        "emailInvalidInputError": "Email неправильний.",
+        
+        "phoneIsRequiredInputError": "Потрібен номер телефону.",
+        "phoneInvalidInputError": "Неправильний формат номеру телефону."
+      },
+      "ReviewForm": {
+        "errorToastLabel": "Помилка",
+        "allFieldsErrorDescription": "Будь ласка заповніть всі поля!",
+        "errorFailDescription": "Не вийшло зберегти відгук. Будь ласка спробуйте пізніше!",
+        "successToastLabel": "Успіх",
+        "successDescription": "Відгук збережено!",
+        
+        "addReviewLabel": "Додати відгук",
+        "selectUserLabel": "Виберіть користувача",
+        "placeholderLabel": "Виберіть користувача",
+        "ratingLabel": "Оцінка",
+        "reviewLabel": "Відгук",
+        "reviewPlaceholder": "Напишіть свій відгук...",
+        "submitLabel": "Підтвердити"        
+      }, 
+      "NavigationButton": {
+        "toMainPageLabel": "На головну",
+        "toDashboardLabel": "Кабінет"
+      },
+      "FilterButton": {
+        "onPriceFilterLabel": "За ціною"
+      },
+      "TagSelector":{
+        "dropdownPlaceholder": "Оберіть тег",
+        "inputPlaceholder": "Або введіть новий тег",
+        "inputButtonLabel": "Додати",
+        "errorMessageFirstPart": "Ви можете обрати до",
+        "errorMessageSecondPart": "-ох тегів."
+      },
+      "ImageUploader": {
+        "cropAndUploadLabel": "Обрізати та Завантажити",
+        "declineLabel": "Скасувати"
+      },
+      "Footer":{
+        "sloganLabel": "Замовляйте консультації на нашому сайті",        
+        "aboutUsLabel": "Про нас",
+        "companyHistoryLabel": "Історія про компанію",
+        "ourServicesLabel": "Наші послуги",
+        "onlineConsultingLabel": "Онлайн консалтинг",
+        "helpfulLinksLabel": "Корисні посилання",
+        "fAQsLabel": "FAQs",
+        "supportLabel": "Підтримка",
+        "contactUsLabel": "Зв'язок з нами",
+        "allRightsLabel": "Всі права захищено",
+        "termsLabel": "Умови використання",
+        "privacyLabel": "Політика конфіденційності"
+      }
+
+    }
+  }

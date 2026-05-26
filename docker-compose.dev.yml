@@ -1,0 +1,126 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - web
+
+  frontend:
+    build:
+      context: ./advicerr-frontend
+      dockerfile: dev.Dockerfile
+    working_dir: /app
+    command: sh -c "npm run dev -- --hostname 0.0.0.0 --port 3000"
+    env_file:
+      - ./advicerr-frontend/.env
+    environment:
+      NEXT_PUBLIC_URL_TO_API: ${NEXT_PUBLIC_URL_TO_API:-/api/}
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./advicerr-frontend:/app
+      - frontend_node_modules:/app/node_modules
+      - frontend_next:/app/.next
+    depends_on:
+      - backend
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=bachelors_dev_web
+      - traefik.http.routers.frontend-dev.rule=Host(`${TRAEFIK_DEV_HOST:-localhost}`)
+      - traefik.http.routers.frontend-dev.entrypoints=web
+      - traefik.http.routers.frontend-dev.priority=1
+      - traefik.http.services.frontend-dev.loadbalancer.server.port=3000
+    networks:
+      - web
+
+  backend:
+    build:
+      context: ./consulting-backend
+      dockerfile: Dockerfile
+    working_dir: /backend/core
+    env_file:
+      - ./consulting-backend/.env
+    environment:
+      DB_URI: ${DB_URI:-postgresql+psycopg2://postgres:1234@db:5432/consultingdb}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+      WATCHFILES_FORCE_POLLING: "true"
+    volumes:
+      - ./consulting-backend:/backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=bachelors_dev_web
+      - traefik.http.routers.backend-dev.rule=Host(`${TRAEFIK_DEV_HOST:-localhost}`) && PathPrefix(`/api`)
+      - traefik.http.routers.backend-dev.entrypoints=web
+      - traefik.http.routers.backend-dev.priority=100
+      - traefik.http.routers.backend-dev.middlewares=backend-dev-strip
+      - traefik.http.middlewares.backend-dev-strip.stripprefix.prefixes=/api
+      - traefik.http.services.backend-dev.loadbalancer.server.port=8000
+    networks:
+      - web
+      - internal
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_DB: ${POSTGRES_DB:-consultingdb}
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-consultingdb}
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data_dev:/data
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "6379:6379"
+    networks:
+      - internal
+
+networks:
+  web:
+    name: bachelors_dev_web
+  internal:
+    name: bachelors_dev_internal
+
+volumes:
+  frontend_node_modules:
+  frontend_next:
+  postgres_data_dev:
+  redis_data_dev:

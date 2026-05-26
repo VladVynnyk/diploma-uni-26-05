@@ -1,0 +1,10 @@
+__pycache__/
+core/__pycache__/
+core/clients/__pycache__/
+core/daos/__pycache__/
+core/database/__pycache__/
+core/database/migrations/__pycache__/
+core/database/migrations/versions/__pycache__/
+core/routers/__pycache__/
+venv/
+.env

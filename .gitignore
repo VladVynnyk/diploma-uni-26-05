@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+  *.pyc
+
+  # Node
+node_modules/
+.next/
+
+# Env / secrets
+.env
+*.env
+deployment/.env
+terraform.tfvars
+*.pem
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Generated
+deployment/generated/avatar_urls.json

@@ -1,0 +1,212 @@
+{
+    "Global": {
+      "dateTimeFormats": {
+        "ISO": "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        "default": "dd MMMM yyyy HH:mm:ss",
+        "d-m-y": "dd MMMM yyyy",
+        "d-m": "dd-MM"
+      }
+    },
+    "Pages": {
+      "NotFoundPage": {
+        "headerTitle": "404",
+        "uhOhMessage": "Ой-йой!",
+        "message": "Мы не можем найти страницу.",
+        "goBackButton": "Назад"
+      },
+      "HomePage": {
+        "headerTitle": "Головна сторінка",
+        "categoriesLabel": "Ціноутворення",
+        "stocksLabel": "Залишки"
+      },
+      "CategoriesPage": {
+        "headerTitle": "Категорії"
+      },
+      "CategoryPage": {
+        "headerTitle": "{{categoryName}}",
+        "headerPreTitle": "Категорія",
+        "headerSubTitle": "{{categoryDescription}}"
+      },
+      "ProductPage": {
+        "headerPreTitle": "Товар",
+        "headerTitle": "{{productTitle}}",
+        "headerSubTitle": "",
+        "_headerSubTitle": "{{productDescription}}",
+        "barcodeLabel": "Штрихкод",
+        "barcodeDesc": "Підказка для штрихкода",
+        "remoteIdLabel": "Артикул",
+        "remoteIdDesc": "",
+        "futurumSkuLabel": "Futurum SKU",
+        "futurumSkuDesc": "",
+        "tableMarketData": {
+          "title": "Ринкові ціни",
+          "btnExportLabel": "Експорт",
+          "chartDateFormat": "",
+          "headerNameName": "Назва",
+          "headerDescName": "",
+          "headerNameRemoteId": "Артикул",
+          "headerDescRemoteId": "",
+          "headerNameLink": "Посилання",
+          "headerDescLink": "",
+          "headerNamePrice": "Поточна ціна",
+          "headerDescPrice": "",
+          "headerNamePriceTrend": "Тренд 90 діб",
+          "headerDescPriceTrend": ""
+        },
+        "tableRoofersSettings":{
+          "title": "Налаштування кровлерів",
+          "headerNameName": "Назва",
+          "headerDescName": "",
+          "headerNameMode": "Режим",
+          "headerDescMode": "",
+          "mode0": "Вимкнено",
+          "mode1": "Ручний",
+          "mode2": "Автоматичний",
+          "modeUnknown": "Невідомий",
+          "headerNameStatus": "Статус",
+          "headerDescStatus": "",
+          "statusTrue": "Знайдено товар",
+          "statusFalse": "Товар відсутній",
+          "headerNameDateTime": "Остання перевірка",
+          "headerDescDateTime": "",
+          "dateTimeFormat": ""
+        },
+        "tableMarketProducts": {
+          "title": "Ціни",
+          "nameFormat" : "{{productName}}",
+          "marketFormat": "{{marketName}}"
+        },
+        "tableInfo": {
+          "title": "Інформація про товар",
+          "headerNameDesc": "Опис",
+          "headerDescDesc": ""
+        }
+      },
+      "StocksPage": {
+        "headerTitle": "Залишки"
+      }
+    },
+    "Components": {
+      "SearchBar": {
+        "defaultPlaceholder": "Пошук...",
+        "defaultBtnLabel": "Пошук"
+      },
+      "DataTable": {
+        "loadingDataMessage": "Завантаження...",
+        "noDataMessage": "Не знайдено",
+        "errorDataMessage": "Помилка завантаження: {{errorMessage}}",
+        "btnExportLabel": "Експорт"
+      },
+      "PageHeader": {
+        "loadingDataTitle": "Завантаження...",
+        "loadingDataPreTitle": "Завантаження...",
+        "loadingDataSubTitle": "Завантаження...",
+        "noDataTitle": "Не знайдено",
+        "noDataPreTitle": "Не знайдено",
+        "noDataSubTitle": "Не знайдено",
+        "errorDataTitle": "Помилка завантаження: {{errorMessage}}",
+        "errorDataPreTitle": "Помилка завантаження: {{errorMessage}}",
+        "errorDataSubTitle": "Помилка завантаження: {{errorMessage}}"
+      },
+      "Datepicker": {
+        "shortcutToday": "Сьогодні",
+        "shortcutYesterday": "Вчора",
+        "shortcutCurrentMonth": "Поточний місяць",
+        "shortcutPastMonth": "Попередній місяць",
+        "shortcutPast": "За {{period}} днів"
+      },
+      "Field": {
+        "FieldSelect": {
+          "placeholder": "Оберіть...",
+          "noOptionsMessage": "Немає опцій"
+        }
+      },
+      "Entities": {
+        "Category": {
+          "CategoryDataTable": {
+            "title": "Категорії",
+            "headerNameRemoteId": "Артикул",
+            "headerDescRemoteId": "Артикул товару",
+            "headerNameName": "Назва",
+            "headerDescName": ""
+          }
+        },
+        "Product": {
+          "ProductDataTable": {
+            "title": "Товари",
+            "btnExportLabel": "Експорт",
+            "searchPlaceholder": "Пошук товару...",
+            "searchBtnLabel": "Пошук",
+            "headerNameRemoteId": "Артикул",
+            "headerDescRemoteId": "Артикул товару",
+            "headerNameName": "Назва",
+            "headerDescName": "",
+            "headerNamePricePurchase": "Ціна закупки",
+            "headerDescPricePurchase": "",
+            "headerNamePrice": "Поточна ціна",
+            "headerDescPrice": "",
+            "headerNamePriceMedian": "Середньо ринкова ціна",
+            "headerDescPriceMedian": "",
+            "headerNamePriceTrend": "Тренд 90 діб",
+            "headerDescPriceTrend": "",
+            "headerNamePriceRecommendation": "Рекомендована ШІ ціна",
+            "headerDescPriceRecommendation": "",
+            "headerNameMarketPriceAnalysis": "Розмах Коршака"
+          },
+          "ProductSettings": {
+            "fieldHeaderNameBarcode": "Штрихкод",
+            "fieldHeaderNameRemoteId": "Артикул",
+            "fieldHeaderNameSK": "Futurum SKU"
+          },
+          "ProductInfo": {
+            "title": "Інформація про товар"
+          },
+          "ProductStorePriceTrends": {
+            "title": "Ринкові ціни",
+            "headerNameStore": "Назва",
+            "headerDescStore": "",
+            "headerNameRemoteId": "Артикул",
+            "headerDescRemoteId": "",
+            "headerNameLink": "Посилання",
+            "headerDescLink": "",
+            "headerNamePrice": "Поточна ціна",
+            "headerDescPrice": "",
+            "headerNamePriceTrend": "Тренд 90 діб",
+            "headerDescPriceTrend": ""
+          },
+          "ProductInfoByStore": {
+            "title": "Налаштування кровлерів",
+            "headerNameStore": "Назва",
+            "headerDescStore": "",
+            "headerNameMode": "Режим",
+            "headerDescMode": "",
+            "headerNameStatus": "Статус",
+            "headerDescStatus": "",
+            "headerNameDate": "Остання перевірка",
+            "headerDescDate": "",
+            "modeauto": "Автоматичний",
+            "modemanual": "Ручний",
+            "modedisabled": "Вимкнено",
+            "statusYes": "Знайдено товар",
+            "statusNo": "Товар відсутній"
+          },
+          "ProductMarketPriceTrend": {
+            "lastPurchasePriceLabel": "Поточна ціна",
+            "marketMedianPriceLabel": "Середньо ринкова ціна"
+          }
+        },
+        "Stocks": {
+          "StocksExport": {
+            "title": "Експорт залишків",
+            "btnOpenLabel": "Експорт",
+            "btnExportGmsLabel": "Експорт Gms",
+            "btnExportPivellaLabel": "Експорт Pivella",
+            "fieldPeriodLabel": "Період",
+            "fieldCategoryLabel": "Категорія",
+            "fieldCategoryGroupsLabel": "Групи категорії",
+            "fieldCategoryGroupsEmptyPlaceholder": "Спочатку оберіть категорію"
+          }
+        }
+      }
+    }
+  }

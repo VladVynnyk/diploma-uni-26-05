@@ -1,0 +1,112 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_letsencrypt:/letsencrypt
+    networks:
+      - web
+
+  frontend:
+    build:
+      context: ./advicerr-frontend
+      dockerfile: prod.Dockerfile
+      args:
+        NEXT_PUBLIC_URL_TO_API: https://${DOMAIN}/api/
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_URL_TO_API: https://${DOMAIN}/api/
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=bachelors_prod_web
+      - traefik.http.routers.frontend-prod.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.frontend-prod.entrypoints=websecure
+      - traefik.http.routers.frontend-prod.tls=true
+      - traefik.http.routers.frontend-prod.tls.certresolver=letsencrypt
+      - traefik.http.services.frontend-prod.loadbalancer.server.port=3000
+    networks:
+      - web
+
+  backend:
+    build:
+      context: ./consulting-backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      DB_URI: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      UVICORN_RELOAD: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=bachelors_prod_web
+      - traefik.http.routers.backend-prod.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
+      - traefik.http.routers.backend-prod.entrypoints=websecure
+      - traefik.http.routers.backend-prod.tls=true
+      - traefik.http.routers.backend-prod.tls.certresolver=letsencrypt
+      - traefik.http.routers.backend-prod.middlewares=backend-prod-strip
+      - traefik.http.middlewares.backend-prod-strip.stripprefix.prefixes=/api
+      - traefik.http.services.backend-prod.loadbalancer.server.port=8000
+    networks:
+      - web
+      - internal
+
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - internal
+
+networks:
+  web:
+    name: bachelors_prod_web
+  internal:
+    name: bachelors_prod_internal
+
+volumes:
+  postgres_data:
+  traefik_letsencrypt:

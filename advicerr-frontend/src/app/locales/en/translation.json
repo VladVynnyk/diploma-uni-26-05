@@ -1,0 +1,249 @@
+{
+    "Global": {
+      "dateTimeFormats": {
+        "ISO": "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+        "default": "dd MMMM yyyy HH:mm:ss",
+        "d-m-y": "dd MMMM yyyy",
+        "d-m": "dd-MM"
+      }
+    },
+    "Pages": {
+      "NotFoundPage": {
+        "headerTitle": "404",
+        "uhOhMessage": "Uh-oh!",
+        "message": "We can't find that page.",
+        "goBackButton": "Go Back Home"
+      },
+      "HomePage": {
+        "loadingLabel": "Loading...",
+        "errorLoadingUsersLabel": "Failed to load data.",
+        "filterButtonLabel": "Filter",
+        "errorUsersNotFoundLabel": "No users found",
+        "headerTitle": "Головна сторінка",
+        "categoriesLabel": "Ціноутворення",
+        "stocksLabel": "Залишки"
+      },
+      "CategoriesPage": {
+        "headerTitle": "Категорії"
+      },
+      "CategoryPage": {
+        "headerTitle": "{{categoryName}}",
+        "headerPreTitle": "Категорія",
+        "headerSubTitle": "{{categoryDescription}}"
+      },
+      "ProductPage": {
+        "headerPreTitle": "Товар",
+        "headerTitle": "{{productTitle}}",
+        "headerSubTitle": "",
+        "_headerSubTitle": "{{productDescription}}",
+        "barcodeLabel": "Штрихкод",
+        "barcodeDesc": "Підказка для штрихкода",
+        "remoteIdLabel": "Артикул",
+        "remoteIdDesc": "",
+        "futurumSkuLabel": "Futurum SKU",
+        "futurumSkuDesc": "",
+        "tableMarketData": {
+          "title": "Ринкові ціни",
+          "btnExportLabel": "Експорт",
+          "chartDateFormat": "",
+          "headerNameName": "Назва",
+          "headerDescName": "",
+          "headerNameRemoteId": "Артикул",
+          "headerDescRemoteId": "",
+          "headerNameLink": "Посилання",
+          "headerDescLink": "",
+          "headerNamePrice": "Поточна ціна",
+          "headerDescPrice": "",
+          "headerNamePriceTrend": "Тренд 90 діб",
+          "headerDescPriceTrend": ""
+        },
+        "tableRoofersSettings":{
+          "title": "Налаштування кровлерів",
+          "headerNameName": "Назва",
+          "headerDescName": "",
+          "headerNameMode": "Режим",
+          "headerDescMode": "",
+          "mode0": "Вимкнено",
+          "mode1": "Ручний",
+          "mode2": "Автоматичний",
+          "modeUnknown": "Невідомий",
+          "headerNameStatus": "Статус",
+          "headerDescStatus": "",
+          "statusTrue": "Знайдено товар",
+          "statusFalse": "Товар відсутній",
+          "headerNameDateTime": "Остання перевірка",
+          "headerDescDateTime": "",
+          "dateTimeFormat": ""
+        },
+        "tableMarketProducts": {
+          "title": "Ціни",
+          "nameFormat" : "{{productName}}",
+          "marketFormat": "{{marketName}}"
+        },
+        "tableInfo": {
+          "title": "Інформація про товар",
+          "headerNameDesc": "Опис",
+          "headerDescDesc": ""
+        }
+      },
+      "StocksPage": {
+        "headerTitle": "Залишки"
+      },
+      "DashboardPage": {
+        "closeMobileMenuLabel": "Close",
+        "menuLabel": "Menu",
+        "loadingLabel": "Loading...",
+        "personalInfo": {
+          "personalInformationLabel": "Personal Information",
+          "errorToastLabel": "Error",
+          "sessionEndedError": "Session ended. Please sign in again. Redirecting..."
+        },
+        "reviews": {
+          "reviewsLabel": "Reviews"
+        },
+        "orders": {
+          "ordersLabel": "Orders",
+          "loadingLabel": "Loading orders...",
+          "errorLoadingLabel": "Failed to load orders.",
+          "emptyLabel": "No orders yet."
+        }
+      },
+      "ResetPasswordPage": {
+       "errorLabel": "Error",
+       "passwordRequiredLabel":"Password required",
+       "passwordLengthLabel": "Password should have at least 8 symbols and have 1 number and 1 letter!",
+       "codeSentLabel": "Verification Code Sent!",
+       "codeSentDescription": "A verification code has been sent to",
+       "failedToSendCodeLabel": "Failed to send verification code. Try again.",
+       "codeVerifiedLabel": "Code Verified!",
+       "codeVerifiedDescription": "You can now set a new password.",
+       "invalidCodeLabel": "Invalid Code",
+       "invalidCodeDescription": "The verification code is incorrect. Try again.",
+       "passwordsNotMatchingLabel": "Passwords do not match!",
+       "passwordUpdatedLabel": "Password Updated!",
+       "passwordUpdatedDescription": "Your password has been successfully changed.",
+       "failedToUpdatePasswordLabel": "Failed to update password. Try again.",
+
+       "forgotPasswordStepLabel": "Forgot Password?",
+       "enterCodeStepLabel": "Enter Verification Code",
+       "setNewPasswordLabel": "Set a New Password",
+
+       "emailLabel": "Email Address",
+       "emailPlaceholder": "Enter your email",
+       "sendVerifCodeButtonLabel": "Send Verification Code",
+       "enterCodeInputLabel": "Enter the verification code sent to your email:",
+       "verifyButtonLabel": "Verify Code",
+       "newPasswordInputLabel": "New Password",
+       "newPasswordPlaceholder": "Enter new password",
+       "confirmPasswordInputLabel": "Confirm Password",
+       "confirmPasswordPlaceholder": "Confirm new password",
+       "changePasswordButtonLabel": "Change Password"
+      }
+    },
+    "Components": {
+      "ConsultantCard":{
+        "scoreLabel": "Score",
+        "priceLabel": "Price",
+        "hourLabel": "hr",
+        "reviewsLabel": "Reviews",
+        "detailsLabel": "Details",
+        "collapseLabel": "Colalpse",
+        "chatLabel": "Chat",
+        "buyLabel": "Buy",
+        "orderConsultationLabel": "Order consultation in"
+      },
+
+      "PayButton":{
+        "payLabel": "Pay"
+      },
+
+      "Review":{
+        "scoreLabel": "Score"
+      },
+
+      "Chats": {
+        "writeMessageLabel": "Write message...",
+        "sendButtonLabel": "Send"
+      },
+      "FilterButton": {
+        "onPriceFilterLabel": "By price",
+        "loadFailedLabel": "Failed to load filters",
+        "emptyLabel": "No filters available"
+      },
+
+      "Header": {
+        "homeSpan": "Home",
+        "categoriesLabel": "Categories",
+        "q&aLabel": "Q&A",
+        "supportLabel": "Support",
+        "loginLabel": "Login",
+        "registerLabel": "Register",
+        "logoutLabel": "Log out"
+      },
+      "SignupForm": {
+        "signUpLabel": "Реєстрація",
+        "nameLabel": "Ім'я",
+        "surnameLabel": "Прізвище",
+        "emailLabel": "Ел-пошта",
+        "passwordLabel": "Пароль",
+        "signUpButtonLabel": "Зареєстуватися",
+        "alternativeOptionLabel": "Вже маєте акаунт?",
+        "loginLabel": "Увійти",
+
+        "requestTargetLabel": "Signup request target:",
+        "nameInputPlaceholder": "Enter your name",
+        "surnameInputPlaceholder": "Enter your surname",
+        "emailInputPlaceholder": "Enter your email",
+        "passwordInputPlaceholder": "Enter your password",
+        "emailRequiredLabel": "Email is required.",
+        "emailInvalidLabel": "Enter a valid email address.",
+        "passwordRequiredLabel": "Password is required.",
+        "passwordLengthLabel": "Password must be at least 8 characters and include 1 letter and 1 number."
+      },
+      "LoginForm": {
+        "logInLabel": "Увійти",
+        "emailLabel": "Ел-пошта",
+        "passwordLabel": "Пароль",
+        "logInButtonLabel": "Увійти",
+        "alternativeOptionLabel": "Не маєте акаунту?",
+        "registerLabel": "Реєстрація",
+
+        "emailInputPlaceholder": "Enter your email",
+        "passwordInputPlaceholder": "Enter your password"
+      },
+      "ReviewForm": {
+        "errorToastLabel": "Помилка",
+        "allFieldsErrorDescription": "Please fill all fields.",
+        "errorFailDescription": "Failed to submit review. Please try again.",
+        "successToastLabel": "Success",
+        "successDescription": "Review submitted successfully!",
+        
+        "addReviewLabel": "Add a Review",
+        "selectUserLabel": "Select User",
+        "placeholderLabel": "Choose a user",
+        "ratingLabel": "Rating",
+        "reviewLabel": "Review",
+        "reviewPlaceholder": "Write your review...",
+        "submitLabel": "Submit Review"        
+      }, 
+      "ImageUploader": {
+        "cropAndUploadLabel": "Crop and Upload",
+        "declineLabel": "Decline"
+      },
+      "Footer":{
+        "sloganLabel": "Order consultations on our website.",        
+        "aboutUsLabel": "About Us",
+        "companyHistoryLabel": "Company History",
+        "ourServicesLabel": "Our Services",
+        "onlineConsultingLabel": "Online consulting",
+        "helpfulLinksLabel": "Helpful links",
+        "fAQsLabel": "FAQs",
+        "supportLabel": "Support",
+        "contactUs": "Contact Us",
+        "allRightsLabel": "All rights reserved.",
+        "termsLabel": "Terms & Conditions",
+        "privacyLabel": "Privacy Policy"
+      }
+  }
+}
+  
