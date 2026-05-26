@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import LoginWContainer from './LoginWContainer'
 
 import { loginMetadata } from './metadata'
@@ -9,8 +9,10 @@ export const metadata = loginMetadata
 
 const LoginPage = (props: Props) => {
   return (
-    <LoginWContainer/>
-)
+    <Suspense fallback={null}>
+      <LoginWContainer />
+    </Suspense>
+  )
 }
 
 export default LoginPage
