@@ -30,6 +30,22 @@ update_users_router = APIRouter(
     prefix="/users",
 )
 
+
+def _as_text(value) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="ignore")
+    return str(value)
+
+
+def _s3_avatar_key_from_url(photo_url) -> str:
+    parsed_url = urlparse(_as_text(photo_url))
+    object_key = _as_text(parsed_url.path).lstrip("/")
+    if not object_key.startswith("avatars/"):
+        return ""
+    return object_key
+
 @update_users_router.patch("/update/{user_id}")
 def update_user(user_id: str, updated_user: UserSchema):
     print(updated_user.model_dump())
@@ -49,11 +65,12 @@ async def change_email(user_id: str, user_email: str):
 
 @update_users_router.patch("/change/photo", summary="Add or change photo of user")
 async def change_photo(user_id: str, photo: UploadFile):
+    temp_file_path: str | None = None
     try:
         # Create a temporary file to save the uploaded data
-        temp_file = tempfile.NamedTemporaryFile(delete=False)
-        with open(temp_file.name, "wb") as temp_file:
-            temp_file.write(photo.file.read())
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            temp_file_path = temp_file.name
+            temp_file.write(await photo.read())
 
         # Configure AWS S3 client
         client_kwargs = {"region_name": aws_region}
@@ -63,26 +80,27 @@ async def change_photo(user_id: str, photo: UploadFile):
         s3 = boto3.client("s3", **client_kwargs)
 
         # Define your S3 bucket name and the key (object name) for the uploaded file
-        bucket_name = avatars_bucket_name or 'avatar-bucket-main'
+        bucket_name = avatars_bucket_name or 'consulting-management-avatars3543'
         s3_object_key = f"avatars/{photo.filename}"
 
         users_dao = UsersDAO(uri=db_uri)
         current_user = users_dao.get_user_by_id(user_id)
-        url_of_old_photo = current_user[0].photo
-        parsed_url = urlparse(url_of_old_photo)
-        old_object_key = parsed_url.path.lstrip("/")
+        if not current_user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found.",
+            )
+
+        old_object_key = _s3_avatar_key_from_url(current_user[0].photo)
 
         if old_object_key:
             s3.delete_object(Bucket=bucket_name, Key=old_object_key)
 
         # Upload the file to S3
-        s3.upload_file(temp_file.name, bucket_name, s3_object_key, ExtraArgs={
+        s3.upload_file(temp_file_path, bucket_name, s3_object_key, ExtraArgs={
                 "ContentType": photo.content_type  # Set the content type from the uploaded file
             })
         print("content type ", photo.content_type)
-
-        # Clean up the temporary file
-        Path(temp_file.name).unlink()
 
         if avatars_base_url:
             link = f"{avatars_base_url.rstrip('/')}/avatars/{photo.filename}"
@@ -94,6 +112,9 @@ async def change_photo(user_id: str, photo: UploadFile):
         return {"message": "Photo uploaded successfully"}
     except NoCredentialsError:
         return {"error": "AWS credentials not found. Ensure your credentials are configured correctly."}
+    finally:
+        if temp_file_path:
+            Path(temp_file_path).unlink(missing_ok=True)
 
 @update_users_router.patch("/change/name", summary="Add or change name of user")
 async def change_name(user_id: str, name: str):

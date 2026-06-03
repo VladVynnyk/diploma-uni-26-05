@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     aws_access_key_id: str = ""
     aws_secret_access_key: str = ""
     aws_region: str = os.getenv("AWS_REGION", os.getenv("AWS_DEFAULT_REGION", "eu-central-1"))
-    avatars_bucket_name: str = ""
+    avatars_bucket_name: str = "consulting-management-avatars3543"
     avatars_base_url: str = ""
     use_s3_avatars: bool = False
 
